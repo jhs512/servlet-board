@@ -24,15 +24,15 @@ public class HomePrintDanServlet extends HttpServlet {
 		if (inputedLimit == null) {
 			inputedLimit = "9";
 		}
-
+		
 		int dan = Integer.parseInt(inputedDan);
 		int limit = Integer.parseInt(inputedLimit);
 		String color = request.getParameter("color");
-
-		if (color == null) {
+		
+		if ( color == null ) {
 			color = "";
 		}
-
+		
 		response.getWriter().append(String.format("<div style=\"color:%s;\">%d단</div>", color, dan));
 		for (int i = 1; i <= limit; i++) {
 			response.getWriter()
