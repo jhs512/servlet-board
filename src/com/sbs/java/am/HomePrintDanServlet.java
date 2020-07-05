@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// home/printDan
+// http://localhost:8081/AM/home/printDan?dan=4&limit=5
 @WebServlet("/home/printDan")
 public class HomePrintDanServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -16,19 +16,27 @@ public class HomePrintDanServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		String inputedDan = request.getParameter("dan");
-		if ( inputedDan == null ) {
+		if (inputedDan == null) {
 			inputedDan = "1";
 		}
-		
+
 		String inputedLimit = request.getParameter("limit");
-		if ( inputedLimit == null ) {
+		if (inputedLimit == null) {
 			inputedLimit = "9";
 		}
+
 		int dan = Integer.parseInt(inputedDan);
 		int limit = Integer.parseInt(inputedLimit);
-		response.getWriter().append(String.format("%d단<br>", dan));
+		String color = request.getParameter("color");
+
+		if (color == null) {
+			color = "";
+		}
+
+		response.getWriter().append(String.format("<div style=\"color:%s;\">%d단</div>", color, dan));
 		for (int i = 1; i <= limit; i++) {
-			response.getWriter().append(String.format("%d * %d = %d<br>", dan, i, dan * i));
+			response.getWriter()
+					.append(String.format("<div style=\"color:%s;\">%d * %d = %d</div>", color, dan, i, dan * i));
 		}
 	}
 }
