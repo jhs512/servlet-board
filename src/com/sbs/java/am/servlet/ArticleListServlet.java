@@ -1,4 +1,4 @@
-package com.sbs.java.am;
+package com.sbs.java.am.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
-public class ArticleDetailServlet extends HttpServlet {
+import com.sbs.java.am.util.DBUtil;
+
+@WebServlet("/article/list")
+public class ArticleListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,14 +42,11 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			DBUtil dbUtil = new DBUtil(request, response);
-			
-			int id = Integer.parseInt(request.getParameter("id"));
 
-			String sql = String.format("SELECT * FROM article WHERE id = %d", id);
-			Map<String, Object> articleRow = dbUtil.selectRow(con, sql);
-			request.setAttribute("articleRow", articleRow);
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);			
+			String sql = "SELECT * FROM article ORDER BY id DESC";
+			List<Map<String, Object>> articleRows = DBUtil.selectRows(con, sql);
+			request.setAttribute("articleRows", articleRows);
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
