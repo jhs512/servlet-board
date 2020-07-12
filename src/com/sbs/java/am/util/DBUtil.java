@@ -148,6 +148,10 @@ public class DBUtil {
 
 		return id;
 	}
+	
+	public static int delete(Connection dbConn, SecSql sql) {
+		return update(dbConn, sql);
+	}
 
 	public static int update(Connection dbConn, SecSql sql) {
 		int affectedRows = 0;
