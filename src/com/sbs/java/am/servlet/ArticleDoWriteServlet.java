@@ -17,9 +17,10 @@ import com.sbs.java.am.util.SecSql;
 
 @WebServlet("/article/doWrite")
 public class ArticleDoWriteServlet extends HttpServlet {
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
 		String url = "jdbc:mysql://localhost:3306/am?serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull";
@@ -49,9 +50,10 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			sql.append("SET regDate = NOW()");
 			sql.append(", title = ?", title);
 			sql.append(", body = ?", body);
-			
+
 			int id = DBUtil.insert(con, sql);
-			response.getWriter().append(String.format("<script> alert('%d번 글이 생성되었습니다.'); location.replace('list'); </script>", id));
+			response.getWriter().append(
+					String.format("<script> alert('%d번 글이 생성되었습니다.'); location.replace('list'); </script>", id));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -63,5 +65,11 @@ public class ArticleDoWriteServlet extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
 	}
 }
