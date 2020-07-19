@@ -15,7 +15,7 @@
 </head>
 <body>
 	<h1>게시물 리스트</h1>
-	
+
 	<div>
 		<a href="write">게시물 작성</a>
 	</div>
@@ -39,7 +39,8 @@
 				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
-				<td><a href="doDelete?id=<%=articleRow.get("id")%>">삭제하기</a></td>
+				<td><a href="doDelete?id=<%=articleRow.get("id")%>">삭제</a> <a
+					href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
 			</tr>
 		</tbody>
 		<%
@@ -47,7 +48,7 @@
 		%>
 	</table>
 	<style type="text/css">
-.page > a.red {
+.page>a.red {
 	color: red;
 }
 </style>
