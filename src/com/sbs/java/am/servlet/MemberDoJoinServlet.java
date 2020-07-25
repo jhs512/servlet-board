@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.java.am.Config;
+import com.sbs.java.am.exception.SQLErrorException;
 import com.sbs.java.am.util.DBUtil;
 import com.sbs.java.am.util.SecSql;
 
@@ -42,15 +43,15 @@ public class MemberDoJoinServlet extends HttpServlet {
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
 			String name = request.getParameter("name");
-			
+
 			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
 			sql.append("FROM member");
 			sql.append("WHERE loginId = ?", loginId);
 			boolean isJoinAvailableLoginId = DBUtil.selectRowIntValue(con, sql) == 0;
-			
-			if ( isJoinAvailableLoginId == false ) {
-				response.getWriter().append(
-						String.format("<script> alert('%s (은)는 이미 사용중인 로그인 아이디 입니다.'); history.back(); </script>", loginId));
+
+			if (isJoinAvailableLoginId == false) {
+				response.getWriter().append(String
+						.format("<script> alert('%s (은)는 이미 사용중인 로그인 아이디 입니다.'); history.back(); </script>", loginId));
 				return;
 			}
 
@@ -61,10 +62,12 @@ public class MemberDoJoinServlet extends HttpServlet {
 			sql.append(", name = ?", name);
 
 			int id = DBUtil.insert(con, sql);
-			response.getWriter().append(
-					String.format("<script> alert('%d번 회원이 생성되었습니다.'); location.replace('../home/main'); </script>", id));
+			response.getWriter().append(String
+					.format("<script> alert('%d번 회원이 생성되었습니다.'); location.replace('../home/main'); </script>", id));
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (SQLErrorException e) {
+			e.getOrigin().printStackTrace();
 		} finally {
 			if (con != null) {
 				try {
