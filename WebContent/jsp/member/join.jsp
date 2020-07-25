@@ -68,20 +68,20 @@
 	
 	<form action="doJoin" method="POST" onsubmit="JoinForm__submit(this); return false;">
 		<div>
-			로그인 아이디 : <input autocomplete="off" placeholder="로그인 아이디를 입력해주세요."
+			로그인 아이디 : <input placeholder="로그인 아이디를 입력해주세요."
 				name="loginId" type="text" />
 		</div>
 		<div>
-			로그인 비번 : <input autocomplete="off" placeholder="로그인 비번을 입력해주세요."
+			로그인 비번 : <input placeholder="로그인 비번을 입력해주세요."
 				name="loginPw" type="password" />
 		</div>
 		<div>
-			로그인 비번 확인 : <input autocomplete="off" placeholder="로그인 비번을 입력해주세요."
+			로그인 비번 확인 : <input placeholder="로그인 비번을 입력해주세요."
 				name="loginPwConfirm" type="password" />
 		</div>
 		<div>
-			이름 : <input autocomplete="off" placeholder="이름을 입력해주세요."
-				name="name" type="password" />
+			이름 : <input placeholder="이름을 입력해주세요."
+				name="name" type="text" />
 		</div>
 
 		<div>
