@@ -13,6 +13,8 @@
 </head>
 <body>
 	<h1>게시물 상세페이지</h1>
+	
+	<%@ include file="../part/topBar.jspf"%>
 
 	<div>
 		번호 :

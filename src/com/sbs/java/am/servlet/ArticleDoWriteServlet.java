@@ -24,10 +24,10 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		HttpSession session = request.getSession();
-		
-		if ( session.getAttribute("loginedMemberId") == null ) {
+
+		if (session.getAttribute("loginedMemberId") == null) {
 			response.getWriter().append(
 					String.format("<script> alert('로그인 후 이용해주세요.'); location.replace('../member/login'); </script>"));
 			return;
@@ -51,8 +51,8 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			con = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-			
-			int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+
+			int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW()");
