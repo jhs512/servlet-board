@@ -2,11 +2,9 @@ package com.sbs.java.am.service;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 
 import com.sbs.java.am.dao.ArticleDao;
-import com.sbs.java.am.util.DBUtil;
-import com.sbs.java.am.util.SecSql;
+import com.sbs.java.am.dto.Article;
 
 public class ArticleService {
 	private ArticleDao articleDao;
@@ -28,13 +26,13 @@ public class ArticleService {
 		return totalPage;
 	}
 
-	public List<Map<String, Object>> getForPrintArticleRows(int page) {
+	public List<Article> getForPrintArticles(int page) {
 		int itemsInAPage = getItemsInAPage();
 		int limitFrom = (page - 1) * itemsInAPage;
 		
-		List<Map<String, Object>> articleRows = articleDao.getArticleRows(limitFrom, itemsInAPage);
+		List<Article> articles = articleDao.getArticles(limitFrom, itemsInAPage);
 		
-		return articleRows;
+		return articles;
 	}
 
 }
