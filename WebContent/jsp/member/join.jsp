@@ -7,7 +7,7 @@
 <title>회원가입</title>
 </head>
 <body>
-	<h1 onclick="alert('hi'); return false;">회원가입</h1>
+	<h1>회원가입</h1>
 	
 	<script>
 	var JoinForm__submitDone = false;
