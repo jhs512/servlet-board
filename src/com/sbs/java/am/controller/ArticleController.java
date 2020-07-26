@@ -8,21 +8,21 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.sbs.java.am.util.DBUtil;
-import com.sbs.java.am.util.SecSql;
+import com.sbs.java.am.service.ArticleService;
 
 public class ArticleController {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Connection con;
+	private ArticleService articleService;
 
 	public ArticleController(HttpServletRequest request, HttpServletResponse response, Connection con) {
 		this.request = request;
 		this.response = response;
-		this.con = con;
+		
+		articleService = new ArticleService(con);
 	}
 
 	public void actionList() throws ServletException, IOException {
@@ -32,20 +32,9 @@ public class ArticleController {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 
-		int itemsInAPage = 10;
-
-		int limitFrom = (page - 1) * itemsInAPage;
-
-		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
-		sql.append("FROM article");
-		int totalCount = DBUtil.selectRowIntValue(con, sql);
-		int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
-
-		sql = SecSql.from("SELECT *");
-		sql.append("FROM article");
-		sql.append("ORDER BY id DESC");
-		sql.append("LIMIT ?, ?", limitFrom, itemsInAPage);
-		List<Map<String, Object>> articleRows = DBUtil.selectRows(con, sql);
+		int totalPage = articleService.getForPrintListTotalPage();
+		List<Map<String, Object>> articleRows = articleService.getForPrintArticleRows(page);
+		
 		request.setAttribute("articleRows", articleRows);
 		request.setAttribute("page", page);
 		request.setAttribute("totalPage", totalPage);
